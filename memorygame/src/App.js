@@ -1,142 +1,133 @@
 import React, { Component } from 'react';
 import './App.css';
 
-class CardName extends Component {
-  render() {
-
-    const name = this.props.name
-
-    return (
-    <div className="card-text">
-          <p className="card-text">{name}</p>
-    </div>
-    )
-  }
-}
-
-
-
+// Card
 class Card extends Component {
-  
-  render() {
-
-    if (this.state.isFront) {
-      var isFront = <IsFront />
+    constructor(props) {
+        super(props)
+        this.handlecardclicked =
+            this.handlecardclicked.bind(this);
+    }
+    handlecardclicked(e) {
+        this.props.oncardclicked.bind(e.target.clicked);
     }
 
-    const image = this.props.image
-    const name = this.props.name
-    const card = <div></div>
-    return (
-    <div className="card" onClick={this.handleClick}>
-        <img class="card-img-top" src={image} />
-        <CardName
-          name={name}
-         />
-      </div>
-      
-    )
-  }
-}
+    render() {
+        const card= this.props.cards
+        
+        return (
+            <div className={card.id} onClick={this.handlecardclicked}>
+                <img class="card-img-top" src={card.image} alt={card.alt}/>
+            </div>
 
-class CardDisplay extends Component {
-  constructor(props){
-    super(props);
-    this.state= {
-      isBack: true,
-      isFront:false
+        )
     }
-  
-  this.handleClick = this.handleClick.bind(this);
 }
 
- handleClick() {
-  if(this.state.isFront) {
-    this.setState({
-      isFront: false
-    })
-  } if(this.state.isBack) {
-    this.setState({
-      isFront: false,
-      isBack: true
-    })
-  }
-  else{
-    this.setState({
-      isFront: false,
-      isBack: false,
-      isInvisible: true
-    })
-  }
-}
-  render() {
+// CardTable
+class CardTable extends Component {
+    render() {
+        const array = [];
+        let lastCard = null;
+        
+        this.props.card.forEach((card) => {
+            if (card !== lastCard) {
+                array.push(
+                    <Card 
+                        cards={card}
+                        key={card.id}
 
-  if (this.state.isFront) {
-    const isFront = <Card />
-  }
-  if (this.state.isBack) {
-    const isBack = <CardBack />
-  }
-  else{
-    const isInvisible = <div></div>
-  }
-    return (
-      <div className="click" onClick={this.handleClick}>
-        {isFront}{isBack}{isInvisible}
-      </div>
-    )
-  }
-}
+                    />
+                )
+            }
+            lastCard = card;
+        });
 
-class CardRow extends Component {
-  constructor(props){
-    super(props);
-    this.state= {
-      cards: cards
+        return (
+            <div className="container flex">
+                {array}
+            </div>
+            
+        )
     }
-      cards: cards
-  }
-
-  render() {
-    const cardRow = [];
-     for (i = 0; i < this.state.cards.length; i++) {
-      cardRow.push(
-        <CardDisplay
-          name={this.state.cards.name}
-          img={this.state.cards.img}
-        />
-      )
-  }
-    return (
-      <div className="row">{cardRow}
-        </div>
-    )
-  }
 }
 
+// Container
+class Container extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            cardsClicked: [],
+        
+        };
+
+        this.handlecardclicked =
+            this.handlecardclicked.bind(this);
+
+    }
+
+    handlecardclicked(cardsClicked) {
+        this.setState({
+            cardsClicked: cardsClicked
+        });
+    }
+
+
+    render() {
+        
+        var card=this.props.card
+        function randomizeCards() {
+            
+            for (var i=0;i<card.length;i++) {
+                const j = Math.floor(Math.random() * (i+1));
+                [card[j], card[i]] = [card[i], card[j]]
+
+            
+            }
+
+        }
+
+        randomizeCards(card)
+
+        return (
+            //<link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
+
+            <div className="container">
+                <CardTable 
+                    CardsSelected={this.state.cardsClicked}
+                    card={this.props.card}
+
+                />
+
+            </div>
+        )
+    }
+}
+
+// Main
 class Main extends Component {
-  constructor(props){
-    super(props);
-    this.state= {
-      cards: cards
+    render() {
+        return (
+            <Container
+                card={CARDS}
+            />
+        )
     }
-  }
-  render() {
-    return (
-      <div className="container-fluid">
-        <CardRow 
-        />
-      </div>
-    )
-  }
 }
 
-export default Main
-
-var cards = [
-  {"Rick", "../compnents/rick.png" },
-  {"Pickle Rick", "../components/picklerick"},
-  {"Evil Morty", "../components/evilmorty"},
-  {"Morty", "../components/morty"},
-  {"Summer", "../components/summer"}
+// Cards
+var CARDS = [
+    { id: 'Rick', image: './images/rick.jpg', alt: 'rick' },
+    { id: 'Pickle Rick', image: './images/picklerick.jpeg', alt: 'picklerick' },
+    { id: 'Evil Morty', image: './images/president.jpeg', alt: 'president' },
+    //{ id: 'Morty', image: './images/morty', alt: 'morty' },
+    { id: 'Summer', image: './images/summer.jpeg', alt: 'summer' },
+    { id: 'Mr Meeseeks', image: '', alt: 'mrmeeseeks' },
+    { id: 'Justin Roiland', image: '', alt: 'justinroiland' },
+    { id: 'Sezchuan Sauce', image: '', alt: 'sezchuansauce' },
+    { id: '', image: '', alt: '' },
+    { id: '', image: '', alt: '' },
+    { id: '', image: '', alt: '' }
 ]
+
+export default Main;
