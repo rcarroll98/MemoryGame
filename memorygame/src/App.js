@@ -17,9 +17,9 @@ class Card extends Component {
         
         return (
             <div className="card m-3" style={{width:160, height:160}} onClick={this.handlecardclicked}>
-                <img class="card-img-top" src={card.image} alt={card.alt}/>
-                <div className="card-body">
-                    <h5 className="card-title">{card.id}</h5>
+                <img className="card-img-top mx-auto" style={{maxWidth:140, maxHeight:120}} src={card.image} alt={card.alt}/>
+                <div className="card-body p-0 m-0 mx-auto">
+                    <h5 className="card-title ">{card.id}</h5>
                 </div>
                 
             </div>
@@ -69,14 +69,21 @@ class CardContainer extends Component {
             this.handlecardclicked.bind(this);
 
     }
+    
 
     handlecardclicked(cardsClicked) {
         this.setState({
             cardsClicked: cardsClicked
         });
+       
     }
 
     render() {
+
+        //TODO: 
+        // function needs to take in what is clicked, search 
+
+        
         
         var card=this.props.card
         function randomizeCards() {
@@ -117,7 +124,7 @@ class Topbar extends Component {
             <div className="row bg-light" style={{height:100}}>
             <div className="mx-auto col-md-12">
             
-                <h2 className="float-left" href>Cool show for mileneals the game</h2>
+                <h2 className="float-left">Rick and Morty Clicky game</h2>
                 
                 
                 <h2 className="float-right">Your score: {score}</h2>
@@ -147,17 +154,16 @@ class Main extends Component {
 
 // Cards
 var CARDS = [
-    { id: 'Rick', image: './images/rick.jpg', alt: 'rick' },
-    { id: 'Pickle Rick', image: './images/picklerick.jpeg', alt: 'picklerick' },
-    { id: 'Evil Morty', image: './images/president.jpeg', alt: 'president' },
-    //{ id: 'Morty', image: './images/morty', alt: 'morty' },
-    { id: 'Summer', image: './images/summer.jpeg', alt: 'summer' },
-    { id: 'Mr Meeseeks', image: '', alt: 'mrmeeseeks' },
-    { id: 'Justin Roiland', image: '', alt: 'justinroiland' },
-    { id: 'Szechuan Sauce', image: '', alt: 'szechuansauce' },
-    { id: 'Snowball', image: '', alt: 'snowball' },
-    { id: 'Mr. Poopybutthole', image: '', alt: 'mrpoopybutthole' },
-    { id: 'Beth', image: '', alt: 'beth' }
+    { id: 'Rick', image: 'rick.jpg', alt: 'rick' },
+    { id: 'Pickle Rick', image: 'picklerick.jpeg', alt: 'picklerick' },
+    { id: 'President', image: 'president.jpeg', alt: 'president' },
+    { id: 'Morty', image: 'morty.jpeg', alt: 'morty' },
+    { id: 'Summer', image: 'summer.jpeg', alt: 'summer' },
+    { id: 'Mr Meeseeks', image: 'mrmeeseeks.jpg', alt: 'mrmeeseeks' },
+    { id: 'Szechuan Sauce', image: 'szechuansauce.jpg', alt: 'szechuansauce' },
+    { id: 'Snowball', image: 'snowball.jpg', alt: 'snowball' },
+    { id: 'Mr. Poopybutthole', image: 'mrpoopybutthole.jpeg', alt: 'mrpoopybutthole' },
+    { id: 'Beth', image: 'beth.jpg', alt: 'beth' }
 ]
 
 export default Main;
