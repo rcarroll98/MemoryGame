@@ -9,15 +9,19 @@ class Card extends Component {
             this.handlecardclicked.bind(this);
     }
     handlecardclicked(e) {
-        this.props.oncardclicked.bind(e.target.clicked);
+        this.props.handlecardclicked.bind(e.target.innerHTML);
     }
 
     render() {
         const card= this.props.cards
         
         return (
-            <div className={card.id} onClick={this.handlecardclicked}>
+            <div className="card m-3" style={{width:160, height:160}} onClick={this.handlecardclicked}>
                 <img class="card-img-top" src={card.image} alt={card.alt}/>
+                <div className="card-body">
+                    <h5 className="card-title">{card.id}</h5>
+                </div>
+                
             </div>
 
         )
@@ -44,7 +48,7 @@ class CardTable extends Component {
         });
 
         return (
-            <div className="container flex">
+            <div className="d-flex flex-wrap col-md-8 center mx-auto">
                 {array}
             </div>
             
@@ -53,7 +57,7 @@ class CardTable extends Component {
 }
 
 // Container
-class Container extends Component {
+class CardContainer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -72,7 +76,6 @@ class Container extends Component {
         });
     }
 
-
     render() {
         
         var card=this.props.card
@@ -82,17 +85,19 @@ class Container extends Component {
                 const j = Math.floor(Math.random() * (i+1));
                 [card[j], card[i]] = [card[i], card[j]]
 
-            
             }
 
         }
 
+        
+
         randomizeCards(card)
+        
 
         return (
             //<link rel="stylesheet" href="https://unpkg.com/tachyons@4.10.0/css/tachyons.min.css"/>
 
-            <div className="container">
+            <div className="container center">
                 <CardTable 
                     CardsSelected={this.state.cardsClicked}
                     card={this.props.card}
@@ -104,13 +109,38 @@ class Container extends Component {
     }
 }
 
+// Topbar
+class Topbar extends Component {
+    render() {
+        const score = 0
+        return (
+            <div className="row bg-light" style={{height:100}}>
+            <div className="mx-auto col-md-12">
+            
+                <h2 className="float-left" href>Cool show for mileneals the game</h2>
+                
+                
+                <h2 className="float-right">Your score: {score}</h2>
+                
+            </div>
+                
+            </div>
+        )
+    }
+}
+
 // Main
 class Main extends Component {
     render() {
         return (
-            <Container
+            <div className="container">
+            <Topbar />
+            
+            <CardContainer
                 card={CARDS}
+
             />
+            </div>
         )
     }
 }
@@ -124,10 +154,10 @@ var CARDS = [
     { id: 'Summer', image: './images/summer.jpeg', alt: 'summer' },
     { id: 'Mr Meeseeks', image: '', alt: 'mrmeeseeks' },
     { id: 'Justin Roiland', image: '', alt: 'justinroiland' },
-    { id: 'Sezchuan Sauce', image: '', alt: 'sezchuansauce' },
-    { id: '', image: '', alt: '' },
-    { id: '', image: '', alt: '' },
-    { id: '', image: '', alt: '' }
+    { id: 'Szechuan Sauce', image: '', alt: 'szechuansauce' },
+    { id: 'Snowball', image: '', alt: 'snowball' },
+    { id: 'Mr. Poopybutthole', image: '', alt: 'mrpoopybutthole' },
+    { id: 'Beth', image: '', alt: 'beth' }
 ]
 
 export default Main;
